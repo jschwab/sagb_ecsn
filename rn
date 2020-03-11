@@ -1,0 +1,62 @@
+#!/bin/bash
+
+function do_one {
+
+    # set inlist for current part of multi-part test
+    if [ ! -e "$1" ]
+    then
+        echo "target file $1 does not exist"
+        exit 1
+    fi
+    ln -sf "$1" inlist
+
+    # remove model from previous runs (may not exist)
+    rm -rf "$2"
+
+    # run test
+    echo 'run' "$1"
+    if ! ./rn1
+    then
+        echo "rn1 failed"
+        exit 1
+    fi
+        
+    # check if final model was produced
+    if [ ! -r $2 ]
+    then
+  	echo
+  	echo "******************************************************************"
+  	echo "failed to create $2 when running $1"
+  	echo "******************************************************************"
+  	echo
+        exit 1
+    fi
+
+    # move LOGS
+    rm -rf "$3"
+    mv LOGS "$3"
+
+    echo
+    echo 'finished' $1
+    echo
+    echo '***'
+    echo '***'
+    echo '***'
+    echo '***'
+    echo
+}
+
+
+date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"
+
+# do_one <inlist> <output_model> <LOGS directory>
+
+do_one inlist_pre_ms_header 2M_pre_ms.mod LOGS_pre_ms
+do_one inlist_to_TACHeB_header 2M_TACHeB.mod LOGS_TACHeB
+do_one inlist_to_3DUP_header 2M_3DUP.mod LOGS_3DUP
+do_one inlist_c13_pocket_header final.mod LOGS_c13_pocket
+
+date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"
+
+echo 'finished all inlists for c13_pocket'
+

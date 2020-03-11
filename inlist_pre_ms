@@ -1,0 +1,24 @@
+&star_job
+
+  ! begin with a pre-main sequence model
+    create_pre_main_sequence_model = .true.
+
+  ! save a model at the end of the run
+    save_model_when_terminate = .true.
+    save_model_filename = '2M_pre_ms.mod'
+
+  ! display on-screen plots
+    pgstar_flag = .false.
+
+/ !end of star_job namelist
+
+
+&controls
+
+  ! loosen tolerances
+    varcontrol_target = 1e-3
+
+  ! stopping condition
+    log_L_lower_limit = 2.0
+
+/ ! end of controls namelist
