@@ -51,9 +51,9 @@ date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"
 
 # do_one <inlist> <output_model> <LOGS directory>
 
-do_one inlist_pre_ms_header 2M_pre_ms.mod LOGS_pre_ms
-do_one inlist_to_TACHeB_header 2M_TACHeB.mod LOGS_TACHeB
-do_one inlist_to_3DUP_header 2M_3DUP.mod LOGS_3DUP
+do_one inlist_pre_ms_header 8M_pre_ms.mod LOGS_pre_ms
+do_one inlist_to_TACHeB_header 8M_TACHeB.mod LOGS_TACHeB
+do_one inlist_to_3DUP_header 8M_3DUP.mod LOGS_3DUP
 do_one inlist_c13_pocket_header final.mod LOGS_c13_pocket
 
 date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"

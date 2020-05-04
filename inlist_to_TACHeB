@@ -2,11 +2,11 @@
 
 ! begin with saved pre-main sequence model
       load_saved_model = .true.
-      saved_model_name = '2M_pre_ms.mod'
+      saved_model_name = '8M_pre_ms.mod'
 
 ! save a model at the end of the run
       save_model_when_terminate = .true.
-      save_model_filename = '2M_TACHeB.mod'
+      save_model_filename = '8M_TACHeB.mod'
 
 ! start counters
       set_initial_age = .true.
