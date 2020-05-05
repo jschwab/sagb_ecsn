@@ -8,7 +8,7 @@
 
   Grid1_win_flag = .false.
 
-  Grid1_win_width = 8
+  Grid1_win_width = 12
   Grid1_win_aspect_ratio = 0.75 ! aspect_ratio = height/width
 
   Grid1_xleft = 0.12 ! fraction of full window width for margin on left
@@ -122,8 +122,8 @@
   Abundance_xaxis_reversed = .false.
 
   ! Abundance xaxis limits -- to override system default selections
-  Abundance_xmin = 0.48
-  Abundance_xmax = 0.60
+  Abundance_xmin = 0.0
+  Abundance_xmax = 3.0
   ! in part 3 these are over-ruled in run_star_extras
 
   ! abundance yaxis limits -- to override system default selections
