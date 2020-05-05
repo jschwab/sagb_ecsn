@@ -4,7 +4,7 @@
 
   pgstar_interval = 1
 
-  Grid1_title = 'c13_pocket (TP-AGB)'
+  Grid1_title = 'SAGB ECSN (8M)'
 
   Grid1_win_flag = .false.
 
@@ -165,8 +165,8 @@
 
   Kipp_win_flag = .false.
   Kipp_title =''
-  Kipp_mass_min = 0.48
-  Kipp_mass_max = 0.60
+  Kipp_mass_min = 0.0
+  Kipp_mass_max = 3.0
 
 
   History_Panels2_win_flag = .false.

@@ -459,19 +459,6 @@
 
          end select
 
-         ! Dynamic pgstar axis limits
-         if (s% x_integer_ctrl(1) == 3) then
-            c13 = s% net_iso(ic13)
-            k_max_c13 = maxloc(s% xa(c13,1:s% nz),dim=1)
-            if (s% xa(c13,k_max_c13) .gt. 0.01) then
-               s% Abundance_xmin = s% m(k_max_c13)/Msun - 0.0001
-               s% Abundance_xmax = s% m(k_max_c13)/Msun + 0.0001
-            else
-               s% Abundance_xmin = s% he_core_mass - 0.0125
-               s% Abundance_xmax = s% he_core_mass + 0.0025
-            end if
-         end if
-
       end function extras_finish_step
 
 
@@ -500,11 +487,11 @@
             write(*,'(A60, F8.3)') '>>>> H-free core mass at the end of He-core burning (Msun): ', mcore_TACHeB
          case (2)
             write(*,'(A60, F8.3)') '>>>> Core mass at first thermal pulse (Msun): ', mcore_1TP
-            write(*,'(A60, F8.3)') '>>>> Age at first thermal pulse (Msun): ', age_1TP / 1d9
+            write(*,'(A60, F8.3)') '>>>> Age at first thermal pulse (Myr): ', age_1TP / 1d6
             write(*,'(A60, F8.3)') '>>>> Core mass at second thermal pulse with 3DUP (Msun): ', mcore_2TP_with_3DUP
             write(*,'(A60, F8.3)') '>>>> Following interpulse time (kyr): ', (age_at_TP - age_2TP_with_3DUP) / 1e3
-            write(*,'(A60, F8.3)') '>>>> Following pulse-to-pulse core growth (1e-3 Msun): ', (mcore_at_TP - mcore_2TP_with_3DUP) / 1d-3
-            write(*,'(A60, F8.3)') '>>>> Dredge up mass at following pulse (1e-3 Msun): ', (mcore_at_TP - mcore_min_after_TP) / 1d-3
+            write(*,'(A60, F8.3)') '>>>> Following pulse-to-pulse core growth (1e-2 Msun): ', (mcore_at_TP - mcore_2TP_with_3DUP) / 1d-2
+            write(*,'(A60, F8.3)') '>>>> Dredge up mass at following pulse (1e-2 Msun): ', (mcore_at_TP - mcore_min_after_TP) / 1d-2
          case(3)
 
             ! characterize c13 pocket location and mass
