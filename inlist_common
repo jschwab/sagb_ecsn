@@ -23,6 +23,11 @@
 ! MLT
       mixing_length_alpha = 1.73
 
+! mixing
+   smooth_convective_bdy = .false.
+   use_Ledoux_criterion = .true.
+   do_conv_premix = .true.
+
 ! opacities
       use_Type2_opacities = .true.
       Zbase = 0.01d0
@@ -39,7 +44,7 @@
 
 ! timestep tolerances
 
-      varcontrol_target = 1d-4
+      varcontrol_target = 1d-3
 
       delta_lgRho_cntr_limit = 0.05
       delta_lgRho_cntr_hard_limit = 0.1
