@@ -24,16 +24,11 @@
 
 &controls
 
-! overshooting
-      overshoot_scheme(1) = 'exponential'
-      overshoot_zone_type(1) = 'any'
-      overshoot_zone_loc(1) = 'any'
-      overshoot_bdy_loc(1) = 'any'
-      overshoot_f(1) = 0.014
-      overshoot_f0(1) = 0.004
+! convective boundaries
+      do_conv_premix = .true.
 
 ! stopping criterion
       xa_central_lower_limit_species(1) = 'he4'
-      xa_central_lower_limit(1) = 1d-4
+      xa_central_lower_limit(1) = 1d-5
 
 / ! end of controls namelist

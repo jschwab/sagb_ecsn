@@ -20,13 +20,18 @@
       initial_y = 0.26
       initial_z = 0.01
 
-! MLT
-      mixing_length_alpha = 1.73
+! convection
+     mixing_length_alpha = 1.8d0
+     MLT_option = 'Henyey'
 
-! mixing
-   smooth_convective_bdy = .false.
-   use_Ledoux_criterion = .true.
-   do_conv_premix = .true.
+     smooth_convective_bdy = .false.
+     use_Ledoux_criterion = .true.
+
+     num_cells_for_smooth_gradL_composition_term = 5
+     threshold_for_smooth_gradL_composition_term = 0.02
+
+     num_cells_for_smooth_brunt_B = 5
+     threshold_for_smooth_brunt_B = 1e-4
 
 ! opacities
       use_Type2_opacities = .true.
@@ -44,7 +49,7 @@
 
 ! timestep tolerances
 
-      varcontrol_target = 1d-3
+      varcontrol_target = 1d-4
 
       delta_lgRho_cntr_limit = 0.05
       delta_lgRho_cntr_hard_limit = 0.1
@@ -73,7 +78,7 @@
       Blocker_scaling_factor = 0.05d0
 
 ! output
-      photo_interval = 500
+      photo_interval = 100
       profile_interval = 100
       history_interval = 10
       terminal_interval = 10
