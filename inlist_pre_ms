@@ -7,6 +7,11 @@
     save_model_when_terminate = .true.
     save_model_filename = '8M_pre_ms.mod'
 
+  ! fall back to other opacities to get started
+      kappa_file_prefix = 'a09'
+      kappa_CO_prefix = 'a09_co'
+      kappa_lowT_prefix = 'lowT_fa05_a09p'
+
   ! display on-screen plots
     pgstar_flag = .false.
 
@@ -19,6 +24,6 @@
     varcontrol_target = 1e-3
 
   ! stopping condition
-    log_L_lower_limit = 2.0
+    log_L_lower_limit = 3.5
 
 / ! end of controls namelist
