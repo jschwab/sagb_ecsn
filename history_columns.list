@@ -578,8 +578,8 @@
 
 !# conditions near center
 
-      !log_center_T ! temperature
-      !log_center_Rho ! density
+      log_center_T ! temperature
+      log_center_Rho ! density
       !log_center_P ! pressure
 
       ! shorter names for above

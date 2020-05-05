@@ -231,4 +231,22 @@
   History_Panels2_file_aspect_ratio = -1 ! negative means use same value as for window
 
 
+  HR_win_flag = .false.
+  HR_title = ''
+
+  HR_logT_min = 3.3
+  HR_logT_max = 4.5
+  HR_logL_min = 3.2
+  HR_logL_max = 5.2
+
+
+  TRho_win_flag = .false.
+  TRho_title = ''
+
+  TRho_logT_min = 7
+  TRho_logT_max = 10
+  TRho_logRho_min = 0
+  TRho_logRho_max = 10
+
+
 / ! end of pgstar namelist
