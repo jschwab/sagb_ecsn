@@ -19,6 +19,7 @@
     varcontrol_target = 1e-3
 
   ! stopping condition
-    log_L_lower_limit = 3.5
+    stop_near_zams = .true.
+    Lnuc_div_L_zams_limit = 1d-3
 
 / ! end of controls namelist
