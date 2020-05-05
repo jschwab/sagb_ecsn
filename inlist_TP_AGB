@@ -1,21 +1,5 @@
 &controls
 
-! spatially resolve the C13 pockets 
-      xa_function_species(1) = 'h1'  ! name of nuclide as defined in chem_def
-      xa_function_weight(1) = 5
-      xa_function_param(1) = 3d-4
-      xa_function_species(2) = 'he4'  ! name of nuclide as defined in chem_def
-      xa_function_weight(2) = 5
-      xa_function_param(2) = 1d-2
-      xa_function_species(3) = 'c13'  ! name of nuclide as defined in chem_def
-      xa_function_weight(3) = 4
-      xa_function_param(3) = 1d-3
-      xa_function_species(4) = 'n14'  ! name of nuclide as defined in chem_def
-      xa_function_weight(4) = 3
-      xa_function_param(4) = 1d-2
-
-      smooth_convective_bdy = .false.
-
 ! temporally resolve the thermal pulse (and interpulse)
 
       delta_lgL_He_limit = 0.01
