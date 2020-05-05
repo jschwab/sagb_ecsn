@@ -1,0 +1,42 @@
+&star_job
+
+! begin with saved model from end of core He burning
+      load_saved_model = .true.
+      saved_model_name = '8M_TACHeB.mod'
+
+! save a model at the end of the run
+      save_model_when_terminate = .true.
+      save_model_filename = '8M_ONe_core.mod'
+
+! display on-screen plots
+      pgstar_flag = .true.
+
+/ !end of star_job namelist
+
+
+&controls
+
+! see inlist_common and inlist_degenerate_core
+
+! resolve flame
+! from Farmer et al. (2015)
+
+      mesh_dlog_burn_c_dlogP_extra = 0.10 
+      mesh_dlog_cc_dlogP_extra = 0.10 
+      mesh_dlog_co_dlogP_extra = 0.10 
+      mesh_dlog_oo_dlogP_extra = 0.10 
+ 
+      ! mesh_logX_species(1) = 'c12'  
+      ! mesh_logX_min_for_extra(1) = -2  
+      ! mesh_dlogX_dlogP_extra(1) = 0.5 
+      ! mesh_dlogX_dlogP_full_on(1) = 0 
+      ! mesh_dlogX_dlogP_full_off(1) = -1 
+
+      ! xa_function_species(1) = 'c12'
+      ! xa_mesh_delta_coeff(1) = 0.5
+
+! stopping condition
+      ! flame has reached center
+      ! see run_star_extras
+
+/ ! end of controls namelist
