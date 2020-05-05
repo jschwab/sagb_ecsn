@@ -35,7 +35,6 @@
       real(dp) :: mcore_2TP_with_3DUP, age_2TP_with_3DUP
       integer :: TP_count, TP_with_3DUP
       logical :: in_LHe_peak
-      real(dp) :: initial_surface_c12
 
       include "test_suite_extras_def.inc"
 
@@ -60,7 +59,7 @@
            read(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
            read(iounit) mcore_2TP_with_3DUP, age_2TP_with_3DUP, TP_with_3DUP
         case(3)
-           read(iounit) TP_count, in_LHe_peak, initial_surface_c12
+           read(iounit) TP_count, in_LHe_peak
         end select
 
       end subroutine extras_photo_read
@@ -82,7 +81,7 @@
            write(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
            write(iounit) mcore_2TP_with_3DUP, age_2TP_with_3DUP, TP_with_3DUP
         case(3)
-           write(iounit) TP_count, in_LHe_peak, initial_surface_c12
+           write(iounit) TP_count, in_LHe_peak
         end select
 
       end subroutine extras_photo_write
@@ -155,7 +154,6 @@
             case(3)
                TP_count = 0
                in_LHe_peak = .false.
-               initial_surface_c12 = s% surface_c12
             end select
          end if
 
@@ -329,11 +327,9 @@
       ! returns either keep_going or terminate.
       ! note: cannot request retry or backup; extras_check_model can do that.
       integer function extras_finish_step(id)
-         use chem_def, only: ic13
          integer, intent(in) :: id
          integer :: ierr
          type (star_info), pointer :: s
-         integer :: c13, k_max_c13
 
          ierr = 0
          call star_ptr(id, s, ierr)
@@ -463,15 +459,11 @@
 
 
       subroutine extras_after_evolve(id, ierr)
-         use chem_def, only: ic13
          integer, intent(in) :: id
          integer, intent(out) :: ierr
          type (star_info), pointer :: s
 
-         integer :: c13, k_max_c13, k
-         real(dp) :: max_c13, mass_max_c13, pocket_mass_c13
-         real(dp) :: max_c13_expected, mass_max_c13_expected, pocket_mass_c13_expected
-         real(dp) :: delta_surface_c12, delta_surface_c12_expected
+         integer :: k
 
          ierr = 0
          call star_ptr(id, s, ierr)
@@ -492,62 +484,6 @@
             write(*,'(A60, F8.3)') '>>>> Following interpulse time (kyr): ', (age_at_TP - age_2TP_with_3DUP) / 1e3
             write(*,'(A60, F8.3)') '>>>> Following pulse-to-pulse core growth (1e-2 Msun): ', (mcore_at_TP - mcore_2TP_with_3DUP) / 1d-2
             write(*,'(A60, F8.3)') '>>>> Dredge up mass at following pulse (1e-2 Msun): ', (mcore_at_TP - mcore_min_after_TP) / 1d-2
-         case(3)
-
-            ! characterize c13 pocket location and mass
-            c13 = s% net_iso(ic13)
-
-            ! mass coordinate of peak c13
-            k_max_c13 = maxloc(s% xa(c13,1:s% nz),dim=1)
-            max_c13 = s% xa(c13,k_max_c13)
-            mass_max_c13 = s% mstar*(s% q(k_max_c13) + s% dq(k_max_c13)/2)/Msun
-
-            ! extent of region with significant c13
-            pocket_mass_c13 = 0
-            do k = 1, s% nz
-               if (s% xa(c13,k) > 1d-2) then
-                  pocket_mass_c13 = pocket_mass_c13 + s% dq(k)
-               end if
-            end do
-            pocket_mass_c13 = pocket_mass_c13*s% star_mass ! mass in Msun units
-
-            delta_surface_c12 = s% surface_c12 - initial_surface_c12
-
-            write(*,1) 'max_c13', max_c13
-            write(*,1) 'mass_max_c13', mass_max_c13
-            write(*,1) 'pocket_mass_c13', pocket_mass_c13
-            write(*,1) 'change in surface_c12', delta_surface_c12
-
-            ! get targets from inlist
-            max_c13_expected = s% x_ctrl(1)
-            mass_max_c13_expected = s% x_ctrl(2)
-            pocket_mass_c13_expected = s% x_ctrl(3)
-            delta_surface_c12_expected = s% x_ctrl(4)
-
-            if (abs(max_c13 - max_c13_expected) > 1d-2) then
-               write(*,*) 'bad value for max_c13'
-               write(*,1) 'mass_max_c13', max_c13
-               write(*,1) 'expected', max_c13_expected
-               write(*,1) 'mass_max_c13-expected', max_c13-max_c13_expected
-            else if (abs(mass_max_c13 - mass_max_c13_expected) > 5d-3) then
-               write(*,*) 'bad value for mass_max_c13'
-               write(*,1) 'mass_max_c13', mass_max_c13
-               write(*,1) 'expected', mass_max_c13_expected
-               write(*,1) 'mass_max_c13-expected', mass_max_c13-mass_max_c13_expected
-            else if (abs(pocket_mass_c13 - pocket_mass_c13_expected) > 1d-5) then
-               write(*,*) 'bad value for pocket_mass_c13'
-               write(*,1) 'pocket_mass_c13', pocket_mass_c13
-               write(*,1) 'expected', pocket_mass_c13_expected
-               write(*,1) 'pocket_mass_c13-expected', pocket_mass_c13-pocket_mass_c13_expected
-            else if (abs(delta_surface_c12 - delta_surface_c12_expected) > 1d-4) then
-               write(*,*) 'bad value for delta_surface_c12'
-               write(*,1) 'delta_surface_c12', delta_surface_c12
-               write(*,1) 'expected', delta_surface_c12_expected
-               write(*,1) 'delta_surface_c12-expected', delta_surface_c12-delta_surface_c12_expected
-            else
-               write(*,'(a)') 'all values are within tolerance'
-            end if
-
          end select
          write(*,*)
 
