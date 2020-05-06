@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH --job-name=c13_pocket
-#SBATCH --partition=gpuq
+#SBATCH --job-name=sagb_ecsn
+#SBATCH --partition=cpuq
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=40
 #SBATCH --export=ALL
@@ -21,5 +21,5 @@ rm -rf png
 
 ./rn | tee rn.out
 
-images_to_movie 'png/grid1*.png' c13_pocket.mp4
+images_to_movie 'png/grid1*.png' sagb_ecsn.mp4
 
