@@ -30,7 +30,7 @@
       implicit none
 
       real(dp) :: ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
-      real(dp) :: m_1cign, m_cflame
+      real(dp) :: m_1cign, t_1cign, m_cflame, t_ONe_core, mcore_2DUP
       real(dp) :: mcore_1TP, age_1TP
       real(dp) :: mcore_at_TP, age_at_TP, mcore_min_after_TP
       real(dp) :: mcore_2TP_with_3DUP, age_2TP_with_3DUP
@@ -56,7 +56,7 @@
         case(1)
            read(iounit) ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
         case(2)
-           read(iounit) m_1cign, m_cflame
+           read(iounit) m_1cign, t_1cign, m_cflame, t_ONe_core, mcore_2DUP
         case(3)
            read(iounit) mcore_at_TP, age_at_TP, mcore_min_after_TP
            read(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
@@ -80,7 +80,7 @@
         case(1)
            write(iounit) ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
         case(2)
-           write(iounit) m_1cign, m_cflame
+           write(iounit) m_1cign, t_1cign, m_cflame, t_ONe_core, mcore_2DUP
         case(3)
            write(iounit) mcore_at_TP, age_at_TP, mcore_min_after_TP
            write(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
@@ -148,7 +148,11 @@
                mcore_TACHeB = 0
             case(2)
                m_1cign = 0
+               t_1cign = 0
                m_cflame = 0
+               t_ONe_core = 0
+               mcore_2DUP = 0
+            case(3)
                mcore_1TP = 0
                age_1TP = 0
                mcore_at_TP = 0
@@ -158,7 +162,7 @@
                age_2TP_with_3DUP = 0
                TP_with_3DUP = 0
                in_LHe_peak = .false.
-            case(3)
+            case(4)
                TP_count = 0
                in_LHe_peak = .false.
             end select
@@ -425,13 +429,17 @@
             if ((m_1cign .eq. 0) .and. (m_cflame .gt. 0)) then
                m_1cign = m_cflame
                write(*,*) 'carbon ignition at mass coordinate (Msun)', m_1cign
+               t_1cign = s% star_age
             end if
 
             ! check if ONe core has formed (flame has reached center)
-            if (s% o_core_mass .gt. 0) then
+            if (m_cflame .le. s% m(1)) then
                termination_code_str(t_xtra1) = 'ONe core has formed'
                s% termination_code = t_xtra1
                extras_finish_step = terminate
+
+               t_ONe_core = s% star_age
+               mcore_2DUP = s% he_core_mass ! assume 2DUP completed already
             end if
 
          case(3)
@@ -526,10 +534,14 @@
          write(*,*)
          select case (s% x_integer_ctrl(1))
          case (1)
-            write(*,'(A60, F8.3)') '>>>> Main-sequence lifetime (Gyr): ', (ms_t1 - ms_t0) / 1d9
+            write(*,'(A60, F8.3)') '>>>> Main-sequence lifetime (Myr): ', (ms_t1 - ms_t0) / 1d6
             write(*,'(A60, F8.3)') '>>>> Deepest penetration of first dredge-up (Msun): ', m_1DUP
+            write(*,'(A60, F8.3)') '>>>> Core He-burning lifetime (Myr): ', (cheb_t1 - cheb_t0) / 1d6
             write(*,'(A60, F8.3)') '>>>> H-free core mass at the end of He-core burning (Msun): ', mcore_TACHeB
          case (2)
+            write(*,'(A60, F8.3)') '>>>> Location of first carbon ignition (Msun): ', m_1cign
+            write(*,'(A60, F8.3)') '>>>> Duration of inward C-burning, flash and flame  (Msun): ', t_ONe_core - t_1cign
+         case (3)
             write(*,'(A60, F8.3)') '>>>> Core mass at first thermal pulse (Msun): ', mcore_1TP
             write(*,'(A60, F8.3)') '>>>> Age at first thermal pulse (Myr): ', age_1TP / 1d6
             write(*,'(A60, F8.3)') '>>>> Core mass at second thermal pulse with 3DUP (Msun): ', mcore_2TP_with_3DUP
