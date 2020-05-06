@@ -2,6 +2,8 @@
 
 #SBATCH --job-name=sagb_ecsn
 #SBATCH --partition=cpuq
+#SBATCH --qos=cpuq
+#SBATCH --account=cpuq
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=40
 #SBATCH --export=ALL
