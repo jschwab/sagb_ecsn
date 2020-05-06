@@ -27,12 +27,6 @@
      smooth_convective_bdy = .false.
      use_Ledoux_criterion = .true.
 
-     num_cells_for_smooth_gradL_composition_term = 5
-     threshold_for_smooth_gradL_composition_term = 0.02
-
-     num_cells_for_smooth_brunt_B = 5
-     threshold_for_smooth_brunt_B = 1e-4
-
 ! opacities
       use_Type2_opacities = .true.
       Zbase = 0.01d0
