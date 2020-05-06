@@ -25,7 +25,10 @@
       mesh_dlog_cc_dlogP_extra = 0.10 
       mesh_dlog_co_dlogP_extra = 0.10 
       mesh_dlog_oo_dlogP_extra = 0.10 
- 
+
+! needed to start flame with gold tols
+      convergence_ignore_equL_residuals = .true.
+
       ! mesh_logX_species(1) = 'c12'  
       ! mesh_logX_min_for_extra(1) = -2  
       ! mesh_dlogX_dlogP_extra(1) = 0.5 
