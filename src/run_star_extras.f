@@ -57,10 +57,11 @@
            read(iounit) ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
         case(2)
            read(iounit) m_1cign, m_cflame
+        case(3)
            read(iounit) mcore_at_TP, age_at_TP, mcore_min_after_TP
            read(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
            read(iounit) mcore_2TP_with_3DUP, age_2TP_with_3DUP, TP_with_3DUP
-        case(3)
+        case(4)
            read(iounit) TP_count, in_LHe_peak
         end select
 
@@ -80,10 +81,11 @@
            write(iounit) ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
         case(2)
            write(iounit) m_1cign, m_cflame
+        case(3)
            write(iounit) mcore_at_TP, age_at_TP, mcore_min_after_TP
            write(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
            write(iounit) mcore_2TP_with_3DUP, age_2TP_with_3DUP, TP_with_3DUP
-        case(3)
+        case(4)
            write(iounit) TP_count, in_LHe_peak
         end select
 
@@ -431,6 +433,8 @@
                s% termination_code = t_xtra1
                extras_finish_step = terminate
             end if
+
+         case(3)
             
             ! record thermal pulses
             if (.not. in_LHe_peak) then
@@ -477,7 +481,7 @@
                end if
             end if
 
-         case(3)
+         case(4)
 
             ! record thermal pulses
             if (.not. in_LHe_peak) then
