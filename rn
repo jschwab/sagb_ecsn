@@ -51,8 +51,8 @@ date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"
 
 # do_one <inlist> <output_model> <LOGS directory>
 
-do_one inlist_pre_ms_header 8M_pre_ms.mod LOGS_pre_ms
-do_one inlist_to_TACHeB_header 8M_TACHeB.mod LOGS_TACHeB
+#do_one inlist_pre_ms_header 8M_pre_ms.mod LOGS_pre_ms
+#do_one inlist_to_TACHeB_header 8M_TACHeB.mod LOGS_TACHeB
 do_one inlist_to_ONe_core_header 8M_ONe_core.mod LOGS_ONe_core
 #do_one inlist_sagb_ecsn_header final.mod LOGS_sagb_ecsn
 
