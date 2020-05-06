@@ -30,6 +30,7 @@
       implicit none
 
       real(dp) :: ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
+      real(dp) :: m_1cign, m_cflame
       real(dp) :: mcore_1TP, age_1TP
       real(dp) :: mcore_at_TP, age_at_TP, mcore_min_after_TP
       real(dp) :: mcore_2TP_with_3DUP, age_2TP_with_3DUP
@@ -55,6 +56,7 @@
         case(1)
            read(iounit) ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
         case(2)
+           read(iounit) m_1cign, m_cflame
            read(iounit) mcore_at_TP, age_at_TP, mcore_min_after_TP
            read(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
            read(iounit) mcore_2TP_with_3DUP, age_2TP_with_3DUP, TP_with_3DUP
@@ -77,6 +79,7 @@
         case(1)
            write(iounit) ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
         case(2)
+           write(iounit) m_1cign, m_cflame
            write(iounit) mcore_at_TP, age_at_TP, mcore_min_after_TP
            write(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
            write(iounit) mcore_2TP_with_3DUP, age_2TP_with_3DUP, TP_with_3DUP
@@ -142,6 +145,8 @@
                m_1DUP = 1d99
                mcore_TACHeB = 0
             case(2)
+               m_1cign = 0
+               m_cflame = 0
                mcore_1TP = 0
                age_1TP = 0
                mcore_at_TP = 0
@@ -180,13 +185,6 @@
          call star_ptr(id, s, ierr)
          if (ierr /= 0) return
          extras_check_model = keep_going
-         if (.false. .and. s% star_mass_h1 < 0.35d0) then
-            ! stop when star hydrogen mass drops to specified level
-            extras_check_model = terminate
-            write(*, *) 'have reached desired hydrogen mass'
-            return
-         end if
-
 
          ! if you want to check multiple conditions, it can be useful
          ! to set a different termination code depending on which
@@ -323,6 +321,34 @@
 
       end subroutine data_for_extra_profile_header_items
 
+      logical function has_ignited(s, k)
+         use net_def
+         use chem_def
+         use chem_lib
+         implicit none
+         type (star_info), pointer,intent(in) :: s
+         integer,intent(in) :: k
+         real(dp) :: neAbun,naAbun,mgAbun,heAbun
+         real(dp) :: netEng,ne_burn,o_burn
+         
+         has_ignited = .false.
+         if(s% c_core_mass > 0d0) then
+            if(s%m(k)/Msun < s%c_core_mass)THEN
+               netEng = star_get_profile_output(s,'net_nuclear_energy',k)
+         
+               if(netEng >= 0.0)THEN
+                  neAbun = s%xa(s%net_iso(chem_get_iso_id('ne20')),k)
+                  naAbun = s%xa(s%net_iso(chem_get_iso_id('na23')),k)
+                  mgAbun = s%xa(s%net_iso(chem_get_iso_id('mg24')),k)
+                  heAbun = s%xa(s%net_iso(chem_get_iso_id('he4')),k)
+                  if(neAbun > naAbun .and. naAbun > mgAbun .and. heAbun < 1d-8)THEN
+                     has_ignited=.true.
+                     return
+                  end if
+               end if
+            end if
+         end if
+      end function has_ignited
 
       ! returns either keep_going or terminate.
       ! note: cannot request retry or backup; extras_check_model can do that.
@@ -331,6 +357,8 @@
          integer :: ierr
          type (star_info), pointer :: s
 
+         integer :: k
+         
          ierr = 0
          call star_ptr(id, s, ierr)
          if (ierr /= 0) return
@@ -384,6 +412,26 @@
 
          case(2)
 
+            ! check to see if carbon has ignited (following Farmer et al. 2015)
+            do k=1, s% nz
+               if (has_ignited(s, k)) then 
+                  m_cflame = s% m(k) ! track where the flame is
+               end if
+            end do
+
+            ! save first flame location
+            if ((m_1cign .eq. 0) .and. (m_cflame .gt. 0)) then
+               m_1cign = m_cflame
+               write(*,*) 'carbon ignition at mass coordinate (Msun)', m_1cign
+            end if
+
+            ! check if ONe core has formed (flame has reached center)
+            if (s% o_core_mass .gt. 0) then
+               termination_code_str(t_xtra1) = 'ONe core has formed'
+               s% termination_code = t_xtra1
+               extras_finish_step = terminate
+            end if
+            
             ! record thermal pulses
             if (.not. in_LHe_peak) then
                ! check for peak
