@@ -433,7 +433,7 @@
             end if
 
             ! check if ONe core has formed (flame has reached center)
-            if (m_cflame .le. s% m(1)) then
+            if (m_cflame .eq. s% m(1)) then
                termination_code_str(t_xtra1) = 'ONe core has formed'
                s% termination_code = t_xtra1
                extras_finish_step = terminate
