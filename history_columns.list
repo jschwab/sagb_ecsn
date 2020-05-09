@@ -994,12 +994,12 @@
 
 
       !run_deltaE
-      !rel_run_E_err
+      rel_run_E_err
 
       !rel_run_deltaE
       !log_rel_run_deltaE
 
-      !rel_E_err
+      rel_E_err
       !abs_rel_E_err
       !log_rel_E_err
 
