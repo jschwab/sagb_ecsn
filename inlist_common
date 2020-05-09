@@ -33,8 +33,6 @@
 
 ! options for energy conservation (see MESA V, Section 3)
       use_dedt_form_of_energy_eqn = .true.
-      min_cell_energy_fraction_for_dedt_form = 0
-      use_eps_mdot = .true.
       use_gold_tolerances = .true.
 
       num_trace_history_values = 2
