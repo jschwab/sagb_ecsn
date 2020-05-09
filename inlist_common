@@ -32,8 +32,11 @@
       Zbase = 0.01d0
 
 ! options for energy conservation (see MESA V, Section 3)
-      use_dedt_form_of_energy_eqn = .true.
+!      use_dedt_form_of_energy_eqn = .true.
       use_gold_tolerances = .true.
+
+      always_use_eps_grav_form_of_energy_eqn = .true.
+      use_eps_grav_future = .true.
 
       num_trace_history_values = 2
       trace_history_value_name(1) = 'rel_E_err'
