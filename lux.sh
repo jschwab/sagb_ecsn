@@ -12,7 +12,7 @@
 #SBATCH --mail-user=jwschwab@ucsc.edu
 
 module load mesasdk/20.3.1
-export MESA_DIR=${DATA_DIR}/mesa-r12778
+export MESA_DIR=${DATA_DIR}/mesa-git
 
 export OMP_NUM_THREADS=36
 
