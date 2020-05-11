@@ -4,7 +4,7 @@
     extra_star_job_inlist1_name = 'inlist_common'
 
     read_extra_star_job_inlist2 = .true.
-    extra_star_job_inlist2_name = 'inlist_c13_pocket'
+    extra_star_job_inlist2_name = 'inlist_sagb_ecsn'
 
 / ! end of star_job namelist
 
@@ -17,10 +17,10 @@
     extra_controls_inlist1_name = 'inlist_common'
 
     read_extra_controls_inlist2 = .true.
-    extra_controls_inlist2_name = 'inlist_TP_AGB'
+    extra_controls_inlist2_name = 'inlist_degenerate_core'
 
     read_extra_controls_inlist3 = .true.
-    extra_controls_inlist3_name = 'inlist_c13_pocket'
+    extra_controls_inlist3_name = 'inlist_sagb_ecsn'
 
 / ! end of controls namelist
 
