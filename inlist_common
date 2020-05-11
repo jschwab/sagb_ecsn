@@ -37,6 +37,7 @@
 
       always_use_eps_grav_form_of_energy_eqn = .true.
       use_eps_grav_future = .true.
+      include_composition_in_eps_grav = .true.
 
       num_trace_history_values = 2
       trace_history_value_name(1) = 'rel_E_err'
