@@ -23,5 +23,5 @@ rm -rf png
 
 ./rn | tee rn.out
 
-images_to_movie 'png/grid1*.png' sagb_ecsn.mp4
+images_to_movie 'png/grid1*.png' 8.8M_sagb_ecsn.mp4
 

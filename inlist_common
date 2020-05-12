@@ -7,7 +7,7 @@
 ! opacities
       kappa_file_prefix = 'a09'
       kappa_CO_prefix = 'a09_co'
-      kappa_lowT_prefix = 'AESOPUS_AGSS09'
+      kappa_lowT_prefix = 'lowT_fa05_a09p' ! 'AESOPUS_AGSS09'
       initial_zfracs = 6
 
 / !end of star_job namelist
@@ -16,7 +16,7 @@
 &controls
 
 ! starting specifications
-      initial_mass = 8.0
+      initial_mass = 8.8
       initial_y = 0.26
       initial_z = 0.01
 

@@ -2,7 +2,7 @@
 
 ! begin with saved model from end of core He burning
       load_saved_model = .true.
-      saved_model_name = '8M_ONe_core.mod'
+      saved_model_name = '8.8M_ONe_core.mod'
 
 ! save a model and profile at the end of the run
       save_model_when_terminate = .true.
@@ -33,6 +33,6 @@
 ! needed to start flame with gold tols
       convergence_ignore_equL_residuals = .true.
 
-  max_model_number = 10000
+  max_model_number = 100000
 
 / ! end of controls namelist

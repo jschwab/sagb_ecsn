@@ -2,11 +2,11 @@
 
 ! begin with saved model from end of core He burning
       load_saved_model = .true.
-      saved_model_name = '8M_TACHeB.mod'
+      saved_model_name = '8.8M_TACHeB.mod'
 
 ! save a model at the end of the run
       save_model_when_terminate = .true.
-      save_model_filename = '8M_3DUP.mod'
+      save_model_filename = '8.8M_3DUP.mod'
 
 ! display on-screen plots
       pgstar_flag = .true.

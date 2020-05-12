@@ -5,7 +5,7 @@
 
   ! save a model at the end of the run
     save_model_when_terminate = .true.
-    save_model_filename = '8M_pre_ms.mod'
+    save_model_filename = '8.8M_pre_ms.mod'
 
   ! display on-screen plots
     pgstar_flag = .false.
