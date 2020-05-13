@@ -421,7 +421,7 @@
             ! check to see if carbon has ignited (following Farmer et al. 2015)
             do k=1, s% nz
                if (has_ignited(s, k)) then 
-                  m_cflame = s% m(k) ! track where the flame is
+                  m_cflame = s% m(k) / Msun ! track where the flame is
                end if
             end do
 
