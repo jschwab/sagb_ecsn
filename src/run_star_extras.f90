@@ -480,15 +480,6 @@
                end if
             end if
 
-            ! stop after 3rd TP after dredge up starts
-            if (.not. in_LHe_peak) then ! pulse is over
-               if ((TP_with_3DUP > 0) .and. (TP_count - TP_with_3DUP == 2)) then
-                  termination_code_str(t_xtra1) = 'third pulse with 3DUP has occurred'
-                  s% termination_code = t_xtra1
-                  extras_finish_step = terminate
-               end if
-            end if
-
          case(4)
 
             ! record thermal pulses
