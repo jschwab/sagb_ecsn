@@ -32,9 +32,8 @@
       real(dp) :: ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
       real(dp) :: m_1cign, t_1cign, m_cflame, t_ONe_core, mcore_2DUP
       real(dp) :: mcore_1TP, age_1TP
-      real(dp) :: mcore_at_TP, age_at_TP, mcore_min_after_TP
-      real(dp) :: mcore_2TP_with_3DUP, age_2TP_with_3DUP
-      integer :: TP_count, TP_with_3DUP
+      real(dp) :: mcore_at_TP, age_at_TP
+      integer :: TP_count
       logical :: in_LHe_peak
 
       include "test_suite_extras_def.inc"
@@ -58,9 +57,8 @@
         case(2)
            read(iounit) m_1cign, t_1cign, m_cflame, t_ONe_core, mcore_2DUP
         case(3)
-           read(iounit) mcore_at_TP, age_at_TP, mcore_min_after_TP
+           read(iounit) mcore_at_TP, age_at_TP
            read(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
-           read(iounit) mcore_2TP_with_3DUP, age_2TP_with_3DUP, TP_with_3DUP
         case(4)
            read(iounit) TP_count, in_LHe_peak
         end select
@@ -82,9 +80,8 @@
         case(2)
            write(iounit) m_1cign, t_1cign, m_cflame, t_ONe_core, mcore_2DUP
         case(3)
-           write(iounit) mcore_at_TP, age_at_TP, mcore_min_after_TP
+           write(iounit) mcore_at_TP, age_at_TP
            write(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
-           write(iounit) mcore_2TP_with_3DUP, age_2TP_with_3DUP, TP_with_3DUP
         case(4)
            write(iounit) TP_count, in_LHe_peak
         end select
@@ -156,11 +153,8 @@
                mcore_1TP = 0
                age_1TP = 0
                mcore_at_TP = 0
-               mcore_min_after_TP = 0
+               age_at_TP = 0
                TP_count = 0
-               mcore_2TP_with_3DUP = 0
-               age_2TP_with_3DUP = 0
-               TP_with_3DUP = 0
                in_LHe_peak = .false.
             case(4)
                TP_count = 0
@@ -409,9 +403,9 @@
                end if
             end if
 
-            ! measure extent of 1DUP
-            if ((ms_t1 .gt. 0) .and. (cheb_t0 .eq. 0)) then
-               if ((s% conv_mx1_top - s% conv_mx1_bot) .gt. 0.1) then
+            ! measure extent of 1DUP (deepest extend of convective envelope post MS)
+            if (ms_t1 .gt. 0) then
+               if ((s% conv_mx1_top - s% conv_mx1_bot) .gt. 1.0) then
                   m_1DUP = min(s% conv_mx1_bot * s% star_mass, m_1DUP)
                end if
             end if
@@ -453,31 +447,13 @@
                   write(*,*) 'starting thermal pulse', TP_count
                   mcore_at_TP = s% he_core_mass
                   age_at_TP = s% star_age
-                  mcore_min_after_TP = mcore_at_TP
                   if (TP_count == 1) then
                      mcore_1TP = s% he_core_mass
                      age_1TP = s% star_age
                   end if
-                  if ((TP_with_3DUP > 0) .and. (TP_count - TP_with_3DUP == 1)) then
-                     mcore_2TP_with_3DUP = s% he_core_mass
-                     age_2TP_with_3DUP = s% star_age
-                  end if
                end if
             else
                if (s% power_h_burn/s% power_he_burn .gt. 10) in_LHe_peak = .false. ! pulse over
-            end if
-
-            ! checking for 3DUP
-            if (TP_count > 0) then
-               mcore_min_after_TP = min(mcore_min_after_TP, s% he_core_mass)
-            end if
-
-            ! mark when signifcant 3DUP has first occured
-            if (TP_with_3DUP == 0) then
-               if ((mcore_min_after_TP - mcore_at_TP) < -1d-4) then
-                  TP_with_3DUP = TP_count
-                  write(*,'(A, I8)')    '>> 3DUP occurred at pulse: ', TP_with_3DUP
-               end if
             end if
 
          case(4)
@@ -489,7 +465,6 @@
                   in_LHe_peak = .true.
                   TP_count = TP_count + 1
                   write(*,*) 'starting thermal pulse'
-                  mcore_min_after_TP = mcore_at_TP
                end if
             else
                if (s% power_h_burn/s% power_he_burn .gt. 10) in_LHe_peak = .false. ! pulse over
@@ -531,14 +506,10 @@
             write(*,'(A60, F8.3)') '>>>> H-free core mass at the end of He-core burning (Msun): ', mcore_TACHeB
          case (2)
             write(*,'(A60, F8.3)') '>>>> Location of first carbon ignition (Msun): ', m_1cign
-            write(*,'(A60, F8.3)') '>>>> Duration of inward C-burning, flash and flame  (Msun): ', t_ONe_core - t_1cign
+            write(*,'(A60, F8.3)') '>>>> Duration of inward C-burning, flash and flame  (kyr): ', (t_ONe_core - t_1cign) / 1e3
          case (3)
             write(*,'(A60, F8.3)') '>>>> Core mass at first thermal pulse (Msun): ', mcore_1TP
             write(*,'(A60, F8.3)') '>>>> Age at first thermal pulse (Myr): ', age_1TP / 1d6
-            write(*,'(A60, F8.3)') '>>>> Core mass at second thermal pulse with 3DUP (Msun): ', mcore_2TP_with_3DUP
-            write(*,'(A60, F8.3)') '>>>> Following interpulse time (kyr): ', (age_at_TP - age_2TP_with_3DUP) / 1e3
-            write(*,'(A60, F8.3)') '>>>> Following pulse-to-pulse core growth (1e-2 Msun): ', (mcore_at_TP - mcore_2TP_with_3DUP) / 1d-2
-            write(*,'(A60, F8.3)') '>>>> Dredge up mass at following pulse (1e-2 Msun): ', (mcore_at_TP - mcore_min_after_TP) / 1d-2
          end select
          write(*,*)
 
