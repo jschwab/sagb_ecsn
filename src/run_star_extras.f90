@@ -405,9 +405,16 @@
 
             ! measure extent of 1DUP (deepest extend of convective envelope post MS)
             if (ms_t1 .gt. 0) then
-               if ((s% conv_mx1_top - s% conv_mx1_bot) .gt. 1.0) then
-                  m_1DUP = min(s% conv_mx1_bot * s% star_mass, m_1DUP)
-               end if
+               ! start at the center and go out until you find a H-rich convective cell
+               do k = s% nz, 1, -1
+                  ! only start tests once we're out of He core
+                  if (s%q(k) * s% star_mass > s% he_core_mass) then
+                     if (s% mixing_type(k) == convective_mixing) then
+                        exit
+                     end if
+                  endif
+               end do
+               m_1DUP = min(s% m(k) / Msun, m_1DUP)
             end if
 
          case(2)
