@@ -409,7 +409,6 @@
                if ((s% conv_mx1_top - s% conv_mx1_bot) .gt. 0.1) then
                   ! check that mixed region is above He core
                   if (s% conv_mx1_bot*s% star_mass .gt. s% he_core_mass) then
-                     write(*,*) s% conv_mx1_bot * s% star_mass, s% he_core_mass, m_1DUP
                      m_1DUP = min(s% conv_mx1_bot * s% star_mass, m_1DUP)
                   end if
                end if
