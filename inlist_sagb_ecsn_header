@@ -22,6 +22,9 @@
     read_extra_controls_inlist3 = .true.
     extra_controls_inlist3_name = 'inlist_sagb_ecsn'
 
+    read_extra_controls_inlist4 = .false.
+    extra_controls_inlist4_name = 'inlist_debug'
+
 / ! end of controls namelist
 
 
