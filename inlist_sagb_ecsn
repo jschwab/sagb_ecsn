@@ -33,6 +33,26 @@
 ! needed to start flame with gold tols
       convergence_ignore_equL_residuals = .true.
 
-  max_model_number = 100000
+! reduce amount of output
+  photo_interval = 10000
+  profile_interval = 10000
+  history_interval = 100
+  terminal_interval = 100
+
+  log_center_density_limit = 9.5d0
+  max_model_number = 10000000
 
 / ! end of controls namelist
+
+
+&pgstar
+
+  pgstar_interval = 100
+
+! tighten T-Rho to show Urca
+  TRho_logT_min = 8
+  TRho_logT_max = 9
+  TRho_logRho_min = 8
+  TRho_logRho_max = 10
+
+/ ! end of pgstar namelist
