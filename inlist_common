@@ -16,7 +16,7 @@
 &controls
 
 ! starting specifications
-      initial_mass = 8.8
+      initial_mass = 10.0
       initial_y = 0.26
       initial_z = 0.01
 
