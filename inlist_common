@@ -60,11 +60,9 @@
       delta_lgL_hard_limit = 0.2
 
 ! atmosphere option
-      atm_option = 'table'
-      atm_table = 'photosphere'
-      atm_off_table_option = 'T_tau'
+      atm_option = 'T_tau'
       atm_T_tau_relation = 'Eddington'
-      atm_T_tau_opacity = 'iterated'
+      atm_T_tau_opacity = 'fixed'
 
 ! mass loss
       cool_wind_RGB_scheme = 'Reimers'
