@@ -3,6 +3,7 @@
   pause = .false.
 
   pgstar_interval = 5
+  file_digits = 8
 
   Grid1_title = 'SAGB ECSN (10.0M)'
 
