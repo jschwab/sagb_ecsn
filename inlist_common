@@ -10,6 +10,12 @@
       kappa_lowT_prefix = 'lowT_fa05_a09p' ! 'AESOPUS_AGSS09'
       initial_zfracs = 6
 
+! always reset at start of model
+      set_initial_cumulative_energy_error = .true.
+      set_cumulative_energy_error = .true.
+      set_cumulative_energy_error_at_step = 0
+      new_cumulative_energy_error = 0d0
+
 / !end of star_job namelist
 
 
@@ -58,6 +64,10 @@
 
       delta_lgL_limit = 0.1
       delta_lgL_hard_limit = 0.2
+
+! turn off more energy nonsense for now
+      limit_for_rel_error_in_energy_conservation = 1d99
+      hard_limit_for_rel_error_in_energy_conservation = 1d99
 
 ! atmosphere option
       atm_option = 'T_tau'
