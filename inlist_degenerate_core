@@ -15,5 +15,7 @@
       overshoot_f(1) = 0.014
       overshoot_f0(1) = 0.004
 
+! let overshoot go to center
+      min_overshoot_q = 0
 
 /
