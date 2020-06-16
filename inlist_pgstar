@@ -167,7 +167,6 @@
   TRho_Profile_win_flag = .false.
   TRho_Profile_title = ''
 
-  show_TRho_Profile_logQ_limit = .true.
   show_TRho_Profile_eos_regions = .true.
   show_TRho_Profile_gamma1_4_3rd = .false.
   ! add legend explaining colors
