@@ -132,7 +132,7 @@
          call star_ptr(id, s, ierr)
          if (ierr /= 0) return
 
-         call test_suite_startup(id, restart, ierr)
+         call test_suite_startup(s, restart, ierr)
 
          if (.not. restart) then
             select case(s% x_integer_ctrl(1))
@@ -517,7 +517,7 @@
          end select
          write(*,*)
 
-         call test_suite_after_evolve(id, ierr)
+         call test_suite_after_evolve(s, ierr)
 
       end subroutine extras_after_evolve
 
