@@ -34,7 +34,7 @@
       convergence_ignore_equL_residuals = .true.
 
 ! reduce amount of output
-  photo_interval = 100
+  photo_interval = 1000
   profile_interval = 10000
   history_interval = 100
   terminal_interval = 100
@@ -47,7 +47,7 @@
 
 &pgstar
 
-  pgstar_interval = 10
+  pgstar_interval = 100
   Grid1_file_interval = 100
 
 ! tighten T-Rho to show Urca
