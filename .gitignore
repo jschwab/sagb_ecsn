@@ -1,6 +1,8 @@
+inlist
 make/*.mod
 make/*.o
 make/*.smod
 photos
 restart_photo
 star
+testhub.yml
