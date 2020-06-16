@@ -130,7 +130,7 @@
 
 !# Thermodynamics
    !temperature ! temperature at center of zone
-   !logT_face ! log10(temperature) at outer boundary of zone
+   logT_face ! log10(temperature) at outer boundary of zone
    !logT_bb ! log10(black body temperature) at outer boundary of zone
    !logT_face_div_logT_bb
 
@@ -154,7 +154,7 @@
    !eta ! electron degeneracy parameter (eta >> 1 for significant degeneracy)
    !mu ! mean molecular weight per gas particle (ions + free electrons)
 
-   !grada ! dlnT_dlnP at constant S
+   grada ! dlnT_dlnP at constant S
    !dE_dRho ! at constant T
    !cv ! specific heat at constant volume
    !cp ! specific heat at constant total pressure
@@ -261,8 +261,8 @@
    !x_mass_fraction_H
    !y_mass_fraction_He
    !z_mass_fraction_metals
-   !abar ! average atomic weight (g/mole)
-   !zbar ! average charge
+   abar ! average atomic weight (g/mole)
+   zbar ! average charge
    !z2bar ! average charge^2
    !ye  ! average charge per baryon = proton fraction
 
@@ -273,7 +273,7 @@
    !z ! metallicity
    !log_z ! metallicity
 
-   !add_abundances ! this adds all of the isos that are in the current net
+   add_abundances ! this adds all of the isos that are in the current net
    ! NOTE: you can list specific isotopes by giving their names (from chem_def)
    !h1
    !he3
@@ -576,8 +576,8 @@
    !log_brunt_N2 ! log10(brunt_N2)
    !log_brunt_N2_dimensionless ! log10(brunt_N2_dimensionless)
       
-   !brunt_B ! smoothed numerical difference
-   !brunt_nonB ! = grada - gradT
+   brunt_B ! smoothed numerical difference
+   brunt_nonB ! = grada - gradT
    !log_brunt_B ! smoothed numerical difference
    !log_brunt_nonB ! = grada - gradT
       
