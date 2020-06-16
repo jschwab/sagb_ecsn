@@ -4,10 +4,7 @@
       change_net = .true.
       new_net_name = 'sagb_NeNa_MgAl.net' ! small net to start
 
-! opacities
-      kappa_file_prefix = 'a09'
-      kappa_CO_prefix = 'a09_co'
-      kappa_lowT_prefix = 'lowT_fa05_a09p' ! 'AESOPUS_AGSS09'
+! initial abundances
       initial_zfracs = 6
 
 ! always reset at start of model
@@ -17,6 +14,18 @@
       new_cumulative_energy_error = 0d0
 
 / !end of star_job namelist
+
+
+&kap
+
+      kap_file_prefix = 'a09'
+      kap_CO_prefix = 'a09_co'
+      kap_lowT_prefix = 'lowT_fa05_a09p' ! 'AESOPUS_AGSS09'
+
+      use_Type2_opacities = .true.
+      Zbase = 0.01d0
+
+/ ! end of kap namelist
 
 
 &controls
@@ -30,16 +39,12 @@
      mixing_length_alpha = 1.8d0
      MLT_option = 'Henyey'
 
-     smooth_convective_bdy = .false.
-     use_Ledoux_criterion = .true.
-
-! opacities
-      use_Type2_opacities = .true.
-      Zbase = 0.01d0
+     use_Ledoux_criterion = .false.
 
 ! options for energy conservation (see MESA V, Section 3)
 !      use_dedt_form_of_energy_eqn = .true.
       use_gold_tolerances = .true.
+      use_gold2_tolerances = .true.
 
       always_use_eps_grav_form_of_energy_eqn = .true.
       use_eps_grav_future = .true.
