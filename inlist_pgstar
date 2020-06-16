@@ -266,5 +266,73 @@
   TRho_logRho_min = 0
   TRho_logRho_max = 10
 
+         Profile_Panels1_win_flag = .false.
+
+         Profile_Panels1_win_width = 8
+         Profile_Panels1_win_aspect_ratio = 1.0 ! aspect_ratio = height/width
+
+         Profile_Panels1_xleft = 0.15
+         Profile_Panels1_xright = 0.85
+         Profile_Panels1_ybot = 0.15
+         Profile_Panels1_ytop = 0.85
+         Profile_Panels1_txt_scale = 1.0
+         Profile_Panels1_title = 'Profile Panels1'
+
+         Profile_Panels1_xaxis_name = 'zone'
+         Profile_Panels1_xaxis_reversed = .false.
+         !Profile_Panels1_xmin = 22
+         ! Profile_Panels1_xmax = 22.756
+         Profile_Panels1_xmin = 1500
+         !Profile_Panels1_xmax = 1900
+         Profile_Panels1_xmargin = 0d0
+         Profile_Panels1_show_mix_regions_on_xaxis = .false.
+
+         Profile_Panels1_yaxis_name(:) = ''
+         Profile_Panels1_yaxis_reversed(:) = .false.
+         Profile_Panels1_yaxis_log(:) = .false. ! show log10 of abs value
+         Profile_Panels1_ymin(:) = -101d0 ! only used if /= -101d0
+         Profile_Panels1_ymax(:) = -101d0 ! only used if /= -101d0
+         Profile_Panels1_ycenter(:) = -101d0 ! only used if /= -101d0
+         Profile_Panels1_ymargin(:) = 0.1
+         Profile_Panels1_dymin(:) = -1
+
+         Profile_Panels1_other_yaxis_name(:) = ''
+         Profile_Panels1_other_yaxis_reversed(:) = .false.
+         Profile_Panels1_other_yaxis_log(:) = .false. ! show log10 of abs value
+         Profile_Panels1_other_ymin(:) = -101d0 ! only used if /= -101d0
+         Profile_Panels1_other_ymax(:) = -101d0 ! only used if /= -101d0
+         Profile_Panels1_other_ycenter(:) = -101d0 ! only used if /= -101d0
+         Profile_Panels1_other_ymargin(:) = 0.1
+         Profile_Panels1_other_dymin(:) = -1
+
+         Profile_Panels1_show_grid = .true.
+
+         ! setup default plot
+         Profile_Panels1_num_panels = 5
+         Profile_Panels1_yaxis_name(1) = 'logT'
+         Profile_Panels1_other_yaxis_name(1) = 'logRho'
+         Profile_Panels1_yaxis_name(2) = 'c12'
+         Profile_Panels1_other_yaxis_name(2) = 'ne20'
+         Profile_Panels1_yaxis_name(3) = 'gradT'
+         Profile_Panels1_other_yaxis_name(3) = 'grada'
+         Profile_Panels1_yaxis_name(4) = 'brunt_B'
+         Profile_Panels1_other_yaxis_name(4) = 'brunt_nonB'
+         Profile_Panels1_yaxis_name(5) = 'log_D_mix'
+         Profile_Panels1_other_yaxis_name(5) = 'log_D_ovr'
+         Profile_Panels1_ymin(5) = 0
+         Profile_Panels1_other_ymin(5) = 0
+
+
+         ! Enables calling a subroutine to add extra information to a plot
+         ! see `$MESA_DIR/star/other/pgstar_decorator.f90`
+         Profile_Panels1_use_decorator = .false.
+
+         ! file output
+         Profile_Panels1_file_flag = .false.
+         Profile_Panels1_file_dir = 'png'
+         Profile_Panels1_file_prefix = 'profile_panels1_'
+         Profile_Panels1_file_interval = 5 ! output when `mod(model_number,Profile_Panels1_file_interval)==0`
+         Profile_Panels1_file_width = -1 ! (inches) negative means use same value as for window
+         Profile_Panels1_file_aspect_ratio = -1 ! negative means use same value as for window
 
 / ! end of pgstar namelist
