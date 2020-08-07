@@ -56,11 +56,9 @@
            read(iounit) ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
         case(2)
            read(iounit) m_1cign, t_1cign, m_cflame, t_ONe_core, mcore_2DUP
-        case(3)
-           read(iounit) mcore_at_TP, age_at_TP
            read(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
-        case(4)
-           read(iounit) TP_count, in_LHe_peak
+        case(3)
+           read(iounit) mcore_at_TP, age_at_TP, TP_count, in_LHe_peak
         end select
 
       end subroutine extras_photo_read
@@ -79,11 +77,9 @@
            write(iounit) ms_t0, cheb_t0, ms_t1, cheb_t1, m_1DUP, mcore_TACHeB
         case(2)
            write(iounit) m_1cign, t_1cign, m_cflame, t_ONe_core, mcore_2DUP
-        case(3)
-           write(iounit) mcore_at_TP, age_at_TP
            write(iounit) mcore_1TP, age_1TP, TP_count, in_LHe_peak
-        case(4)
-           write(iounit) TP_count, in_LHe_peak
+        case(3)
+           write(iounit) mcore_at_TP, age_at_TP, TP_count, in_LHe_peak
         end select
 
       end subroutine extras_photo_write
@@ -149,15 +145,14 @@
                m_cflame = 0
                t_ONe_core = 0
                mcore_2DUP = 0
-            case(3)
                mcore_1TP = 0
                age_1TP = 0
-               mcore_at_TP = 0
-               age_at_TP = 0
                TP_count = 0
                in_LHe_peak = .false.
-            case(4)
-               TP_count = 0
+            case(3)
+               mcore_at_TP = 0
+               age_at_TP = 0
+               TP_count = 1 ! had one pulse in part 2
                in_LHe_peak = .false.
             end select
          end if
@@ -330,12 +325,12 @@
          integer,intent(in) :: k
          real(dp) :: neAbun,naAbun,mgAbun,heAbun
          real(dp) :: netEng,ne_burn,o_burn
-         
+
          has_ignited = .false.
          if(s% c_core_mass > 0d0) then
             if(s%m(k)/Msun < s%c_core_mass)THEN
                netEng = star_get_profile_output(s,'net_nuclear_energy',k)
-         
+
                if(netEng >= 0.0)THEN
                   neAbun = s%xa(s%net_iso(chem_get_iso_id('ne20')),k)
                   naAbun = s%xa(s%net_iso(chem_get_iso_id('na23')),k)
@@ -358,7 +353,7 @@
          type (star_info), pointer :: s
 
          integer :: k
-         
+
          ierr = 0
          call star_ptr(id, s, ierr)
          if (ierr /= 0) return
@@ -418,7 +413,7 @@
 
             ! check to see if carbon has ignited (following Farmer et al. 2015)
             do k=1, s% nz
-               if (has_ignited(s, k)) then 
+               if (has_ignited(s, k)) then
                   m_cflame = s% m(k) / Msun ! track where the flame is
                end if
             end do
@@ -432,43 +427,22 @@
 
             ! check if ONe core has formed (flame has reached center)
             if ((s% center_ne20 .gt. 0.1) .and. (s% eps_nuc(s% nz) .lt. 1)) then
-               termination_code_str(t_xtra1) = 'ONe core has formed'
-               s% termination_code = t_xtra1
-               extras_finish_step = terminate
-
+               write(*,*) 'ONe core has formed'
                t_ONe_core = s% star_age
                mcore_2DUP = s% he_core_mass ! assume 2DUP completed already
             end if
 
-         case(3)
-            
             ! record thermal pulses
             if (.not. in_LHe_peak) then
                ! check for peak
                if (s% power_he_burn .gt. 1e4) then
                   in_LHe_peak = .true.
                   TP_count = TP_count + 1
-                  write(*,*) 'starting thermal pulse', TP_count
-                  mcore_at_TP = s% he_core_mass
-                  age_at_TP = s% star_age
+                  write(*,*) 'starting first thermal pulse'
                   if (TP_count == 1) then
                      mcore_1TP = s% he_core_mass
                      age_1TP = s% star_age
                   end if
-               end if
-            else
-               if (s% power_h_burn/s% power_he_burn .gt. 10) in_LHe_peak = .false. ! pulse over
-            end if
-
-         case(4)
-
-            ! record thermal pulses
-            if (.not. in_LHe_peak) then
-               ! check for peak
-               if (s% power_he_burn .gt. 1e4) then
-                  in_LHe_peak = .true.
-                  TP_count = TP_count + 1
-                  write(*,*) 'starting thermal pulse'
                end if
             else
                if (s% power_h_burn/s% power_he_burn .gt. 10) in_LHe_peak = .false. ! pulse over
@@ -481,6 +455,23 @@
                   s% termination_code = t_xtra1
                   extras_finish_step = terminate
                end if
+            end if
+
+
+         case(3)
+
+            ! record thermal pulses
+            if (.not. in_LHe_peak) then
+               ! check for peak
+               if (s% power_he_burn .gt. 1e4) then
+                  in_LHe_peak = .true.
+                  TP_count = TP_count + 1
+                  write(*,*) 'starting thermal pulse', TP_count
+                  mcore_at_TP = s% he_core_mass
+                  age_at_TP = s% star_age
+               end if
+            else
+               if (s% power_h_burn/s% power_he_burn .gt. 10) in_LHe_peak = .false. ! pulse over
             end if
 
          end select
@@ -511,9 +502,11 @@
          case (2)
             write(*,'(A60, F8.3)') '>>>> Location of first carbon ignition (Msun): ', m_1cign
             write(*,'(A60, F8.3)') '>>>> Duration of inward C-burning, flash and flame  (kyr): ', (t_ONe_core - t_1cign) / 1e3
-         case (3)
             write(*,'(A60, F8.3)') '>>>> Core mass at first thermal pulse (Msun): ', mcore_1TP
             write(*,'(A60, F8.3)') '>>>> Age at first thermal pulse (Myr): ', age_1TP / 1d6
+         ! case (3)
+         !    write(*,'(A60, F8.3)') '>>>> Core mass at first thermal pulse (Msun): ', mcore_1TP
+         !    write(*,'(A60, F8.3)') '>>>> Age at first thermal pulse (Myr): ', age_1TP / 1d6
          end select
          write(*,*)
 
