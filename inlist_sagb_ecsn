@@ -1,8 +1,8 @@
 &star_job
 
-! begin with saved model from end of core He burning
+! begin with saved model from after 1st thermal pulse
       load_saved_model = .true.
-      saved_model_name = '10.0M_ONe_core.mod'
+      saved_model_name = '10.0M_1TP.mod'
 
 ! save a model and profile at the end of the run
       save_model_when_terminate = .true.
@@ -30,9 +30,6 @@
 
 ! see inlist_degenerate_core
 
-! needed to start flame with gold tols
-      convergence_ignore_equL_residuals = .true.
-
 ! reduce amount of output
   photo_interval = 1000
   profile_interval = 10000
@@ -47,8 +44,8 @@
 
 &pgstar
 
-  pgstar_interval = 100
-  Grid1_file_interval = 100
+  ! pgstar_interval = 100
+  ! Grid1_file_interval = 100
 
 ! tighten T-Rho to show Urca
   TRho_logT_min = 8
