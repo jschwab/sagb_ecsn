@@ -7,7 +7,7 @@
     extra_star_job_inlist2_name = 'inlist_degenerate_core'
 
     read_extra_star_job_inlist3 = .true.
-    extra_star_job_inlist3_name = 'inlist_to_ONe_core'
+    extra_star_job_inlist3_name = 'inlist_to_1TP'
 
 / ! end of star_job namelist
 
@@ -21,7 +21,7 @@
     extra_eos_inlist2_name = 'inlist_degenerate_core'
 
     read_extra_eos_inlist3 = .true.
-    extra_eos_inlist3_name = 'inlist_to_ONe_core'
+    extra_eos_inlist3_name = 'inlist_to_1TP'
 
 / ! end of eos namelist
 
@@ -35,7 +35,7 @@
     extra_kap_inlist2_name = 'inlist_degenerate_core'
 
     read_extra_kap_inlist3 = .true.
-    extra_kap_inlist3_name = 'inlist_to_ONe_core'
+    extra_kap_inlist3_name = 'inlist_to_1TP'
 
 / ! end of kap namelist
 
@@ -51,7 +51,7 @@
     extra_controls_inlist2_name = 'inlist_degenerate_core'
 
     read_extra_controls_inlist3 = .true.
-    extra_controls_inlist3_name = 'inlist_to_ONe_core'
+    extra_controls_inlist3_name = 'inlist_to_1TP'
 
     read_extra_controls_inlist4 = .true.
     extra_controls_inlist4_name = 'inlist_debug'
