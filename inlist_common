@@ -16,6 +16,13 @@
 / !end of star_job namelist
 
 
+&eos
+
+      use_Skye_eos = .true.
+
+/ ! end of eos namelist
+
+
 &kap
 
       kap_file_prefix = 'a09'
