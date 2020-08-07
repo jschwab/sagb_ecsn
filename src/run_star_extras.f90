@@ -432,8 +432,8 @@
                mcore_2DUP = s% he_core_mass ! assume 2DUP completed already
             end if
 
-            ! record thermal pulses
-            if (.not. in_LHe_peak) then
+            ! look for thermal pulses once flame has reached the center
+            if (.not. in_LHe_peak .and. t_ONe_core .gt. 0) then
                ! check for peak
                if (s% power_he_burn .gt. 1e4) then
                   in_LHe_peak = .true.
