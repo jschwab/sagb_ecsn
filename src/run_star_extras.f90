@@ -474,9 +474,17 @@
                if (s% power_h_burn/s% power_he_burn .gt. 10) in_LHe_peak = .false. ! pulse over
             end if
 
+            ! dynamic axes for Kipp plot
             s% Kipp_mass_min = s% c_core_mass - 0.01
             s% Kipp_mass_max = s% he_core_mass + 0.01
             s% Kipp_max_width = 10000
+
+            ! termination conditions
+            if (s% L_surf < 1d0) then
+               termination_code_str(t_xtra2) = 'going down WD cooling track (Lsurf < 1 Lsun)'
+               s% termination_code = t_xtra2
+               extras_finish_step = terminate
+            end if
 
          end select
 
@@ -508,9 +516,9 @@
             write(*,'(A60, F8.3)') '>>>> Duration of inward C-burning, flash and flame  (kyr): ', (t_ONe_core - t_1cign) / 1e3
             write(*,'(A60, F8.3)') '>>>> Core mass at first thermal pulse (Msun): ', mcore_1TP
             write(*,'(A60, F8.3)') '>>>> Age at first thermal pulse (Myr): ', age_1TP / 1d6
-         ! case (3)
-         !    write(*,'(A60, F8.3)') '>>>> Core mass at first thermal pulse (Msun): ', mcore_1TP
-         !    write(*,'(A60, F8.3)') '>>>> Age at first thermal pulse (Myr): ', age_1TP / 1d6
+         case (3)
+            write(*,'(A60, F8.3)') '>>>> Number of thermal pulses: ', TP_count
+            write(*,'(A60, F8.3)') '>>>> Final mass (Msun): ', s% star_mass
          end select
          write(*,*)
 
