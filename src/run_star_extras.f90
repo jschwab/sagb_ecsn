@@ -474,6 +474,10 @@
                if (s% power_h_burn/s% power_he_burn .gt. 10) in_LHe_peak = .false. ! pulse over
             end if
 
+            s% Kipp_mass_min = s% c_core_mass - 0.01
+            s% Kipp_mass_max = s% he_core_mass + 0.01
+            s% Kipp_max_width = 10000
+
          end select
 
       end function extras_finish_step
