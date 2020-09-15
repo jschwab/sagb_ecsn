@@ -475,8 +475,8 @@
             end if
 
             ! dynamic axes for Kipp plot
-            s% Kipp_mass_min = s% c_core_mass - 0.01
-            s% Kipp_mass_max = s% he_core_mass + 0.01
+            s% Kipp_mass_min = s% c_core_mass - 0.001
+            s% Kipp_mass_max = s% he_core_mass + 0.001
             s% Kipp_max_width = 10000
 
             ! termination conditions
