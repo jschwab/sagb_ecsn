@@ -8,6 +8,7 @@
 #SBATCH --ntasks-per-node=40
 #SBATCH --export=ALL
 #SBATCH --time=24:00:00
+#SBATCH --no-requeue
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=jwschwab@ucsc.edu
 

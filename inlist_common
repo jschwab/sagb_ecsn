@@ -86,7 +86,7 @@
 ! atmosphere option
       atm_option = 'T_tau'
       atm_T_tau_relation = 'Eddington'
-      atm_T_tau_opacity = 'iterated'
+      atm_T_tau_opacity = 'fixed'
 
 ! mass loss
       cool_wind_RGB_scheme = 'Reimers'
