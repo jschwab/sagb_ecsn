@@ -63,19 +63,37 @@
 
 ! timestep tolerances
 
-      varcontrol_target = 1d-4
+      varcontrol_target = 1d-3
 
-      delta_lgRho_cntr_limit = 0.05
-      delta_lgRho_cntr_hard_limit = 0.1
+      delta_lgRho_cntr_limit = 0.01
+      delta_lgRho_cntr_hard_limit = 0.02
 
       delta_lgT_cntr_limit = 0.01
       delta_lgT_cntr_hard_limit = 0.02
+
+      delta_lgRho_limit = 0.05d0
+      delta_lgRho_hard_limit = 0.1d0
+      delta_lgRho_limit_min_lgRho = -1d99
+
+      delta_lgT_limit = 0.05d0
+      delta_lgT_hard_limit = 0.1d0
+      delta_lgT_limit_min_lgT = -1d99
 
       delta_lgTeff_limit = 0.01
       delta_lgTeff_hard_limit = 0.02
 
       delta_lgL_limit = 0.1
       delta_lgL_hard_limit = 0.2
+
+      delta_lgL_nuc_limit = 0.1
+      delta_lgL_nuc_hard_limit = 0.2
+
+      delta_XH_cntr_limit = 0.005d0
+      delta_XH_cntr_hard_limit = 0.01d0
+
+      delta_XHe_cntr_limit = 0.005d0
+      delta_XHe_cntr_hard_limit = 0.01d0
+
 
 ! turn off more energy nonsense for now
       limit_for_rel_error_in_energy_conservation = 1d99
