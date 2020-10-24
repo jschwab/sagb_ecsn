@@ -17,6 +17,9 @@
     read_extra_eos_inlist2 = .true.
     extra_eos_inlist2_name = 'inlist_to_TACHeB'
 
+    read_extra_eos_inlist3 = .false.
+    extra_eos_inlist3_name = 'inlist_debug'
+
 / ! end of eos namelist
 
 
@@ -27,6 +30,9 @@
 
     read_extra_kap_inlist2 = .true.
     extra_kap_inlist2_name = 'inlist_to_TACHeB'
+
+    read_extra_kap_inlist3 = .false.
+    extra_kap_inlist3_name = 'inlist_debug'
 
 / ! end of kap namelist
 
@@ -40,6 +46,10 @@
 
     read_extra_controls_inlist2 = .true.
     extra_controls_inlist2_name = 'inlist_to_TACHeB'
+
+    read_extra_controls_inlist3 = .false.
+    extra_controls_inlist3_name = 'inlist_debug'
+
 
 / ! end of controls namelist
 

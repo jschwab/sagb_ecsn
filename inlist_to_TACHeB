@@ -24,9 +24,6 @@
 
 &controls
 
-! convective boundaries
-      do_conv_premix = .true.
-
 ! stopping criterion
       xa_central_lower_limit_species(1) = 'he4'
       xa_central_lower_limit(1) = 1d-5
