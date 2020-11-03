@@ -29,3 +29,12 @@
       xa_central_lower_limit(1) = 1d-5
 
 / ! end of controls namelist
+
+
+&pgstar
+
+      ! more frequent output
+      pgstar_interval = 10
+      Grid1_file_interval = 10
+
+/ ! end of pgstar namelist
