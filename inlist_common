@@ -77,12 +77,15 @@
 
 ! options for energy conservation (see MESA V, Section 3)
 !      use_dedt_form_of_energy_eqn = .true.
+!      always_use_dedt_form_of_energy_eqn = .true.
+
       use_gold_tolerances = .true.
       use_gold2_tolerances = .true.
 
       always_use_eps_grav_form_of_energy_eqn = .true.
       use_eps_grav_future = .true.
       include_composition_in_eps_grav = .true.
+      use_d_eos_dxa = .true.
 
       num_trace_history_values = 2
       trace_history_value_name(1) = 'rel_E_err'
@@ -98,8 +101,8 @@
       delta_lgT_cntr_limit = 0.01
       delta_lgT_cntr_hard_limit = 0.02
 
-      delta_lgRho_limit = 0.05d0
-      delta_lgRho_hard_limit = 0.1d0
+      delta_lgRho_limit = 0.1d0
+      delta_lgRho_hard_limit = 0.2d0
       delta_lgRho_limit_min_lgRho = -1d99
 
       delta_lgT_limit = 0.05d0
