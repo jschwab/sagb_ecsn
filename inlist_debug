@@ -1,5 +1,14 @@
 &controls
 
+      ! convergence_ignore_equL_residuals = .true.
+
+      ! use_time_centered_eps_grav = .true.
+      ! include_composition_in_eps_grav = .true.
+
+      ! always_use_dedt_form_of_energy_eqn = .true.
+      ! always_use_eps_grav_form_of_energy_eqn = .false.
+      ! use_d_eos_dxa = .true.
+
       !photo_interval = 1
       !profile_interval = 1
       !history_interval = 1
