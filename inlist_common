@@ -103,11 +103,11 @@
 
       delta_lgRho_limit = 0.1d0
       delta_lgRho_hard_limit = 0.2d0
-      delta_lgRho_limit_min_lgRho = -1d99
+      delta_lgRho_limit_min_lgRho = -1d0
 
       delta_lgT_limit = 0.05d0
       delta_lgT_hard_limit = 0.1d0
-      delta_lgT_limit_min_lgT = -1d99
+      delta_lgT_limit_min_lgT = 7d0
 
       delta_lgTeff_limit = 0.01
       delta_lgTeff_hard_limit = 0.02
