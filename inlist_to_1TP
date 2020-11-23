@@ -41,5 +41,7 @@
 ! stopping condition
       ! flame has reached center
       ! see run_star_extras
+      num_trace_history_values = 3
+      trace_history_value_name(3) = 'max_eps_nuc_m'
 
 / ! end of controls namelist
