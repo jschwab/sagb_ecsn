@@ -236,8 +236,8 @@
   ! see `$MESA_DIR/star/other/pgstar_decorator.f90`
   History_Panels2_use_decorator = .false.
 
-  History_Panels2_yaxis_name(1) = 'log_LH'
-  History_Panels2_other_yaxis_name(1) = 'log_LHe'
+  History_Panels2_yaxis_name(1) = 'log_LH_shell'
+  History_Panels2_other_yaxis_name(1) = 'log_LHe_shell'
 
   ! file output
   History_Panels2_file_flag = .false.

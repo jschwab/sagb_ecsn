@@ -36,6 +36,8 @@
       integer :: TP_count
       logical :: in_LHe_peak
 
+      real(dp) :: LH_shell, LHe_shell
+
       include "test_suite_extras_def.inc"
 
       contains
@@ -201,7 +203,7 @@
          ierr = 0
          call star_ptr(id, s, ierr)
          if (ierr /= 0) return
-         how_many_extra_history_columns = 0
+         how_many_extra_history_columns = 2
       end function how_many_extra_history_columns
 
 
@@ -219,6 +221,11 @@
          ! the history_columns.list is only for the built-in history column options.
          ! it must not include the new column names you are adding here.
 
+         names(1) = 'log_LH_shell'
+         vals(1) = safe_log10(LH_shell)
+
+         names(2) = 'log_LHe_shell'
+         vals(2) = safe_log10(LHe_shell)
 
       end subroutine data_for_extra_history_columns
 
@@ -348,6 +355,7 @@
       ! returns either keep_going or terminate.
       ! note: cannot request retry or backup; extras_check_model can do that.
       integer function extras_finish_step(id)
+         use chem_def, only: ipp, icno, i3alf
          integer, intent(in) :: id
          integer :: ierr
          type (star_info), pointer :: s
@@ -363,6 +371,27 @@
             ! s% need_to_save_profiles_now = .true.
          ! to update the star log,
             ! s% need_to_update_history_now = .true.
+
+         ! calculate shell burning luminosities
+
+         if (s% he_core_mass .gt. 0) then
+            do k = 1, s% nz
+               if (s% m(k)/Msun .le. s% he_core_mass) exit
+            end do
+            LH_shell = dot_product(s% dm(1:k), s% eps_nuc_categories(ipp,1:k))/Lsun + &
+                 dot_product(s% dm(1:k), s% eps_nuc_categories(icno,1:k))/Lsun
+         else
+            LH_shell = 0
+         endif
+
+         if (s% c_core_mass .gt. 0) then
+            do k = 1, s% nz
+               if (s% m(k)/Msun .le. s% c_core_mass) exit
+            end do
+            LHe_shell = dot_product(s% dm(1:k), s% eps_nuc_categories(i3alf,1:k))/Lsun
+         else
+            LHe_shell = 0
+         endif
 
          select case (s% x_integer_ctrl(1))
          case (1)
@@ -435,7 +464,7 @@
             ! look for thermal pulses once flame has reached the center
             if (.not. in_LHe_peak .and. t_ONe_core .gt. 0) then
                ! check for peak
-               if (s% power_he_burn .gt. 1e4) then
+               if (LHe_shell .gt. 1e4) then
                   in_LHe_peak = .true.
                   TP_count = TP_count + 1
                   write(*,*) 'starting first thermal pulse'
@@ -445,7 +474,7 @@
                   end if
                end if
             else
-               if (s% power_h_burn/s% power_he_burn .gt. 10) in_LHe_peak = .false. ! pulse over
+               if (LH_shell/LHe_shell .gt. 10) in_LHe_peak = .false. ! pulse over
             end if
 
             ! stop after one TP
@@ -463,7 +492,7 @@
             ! record thermal pulses
             if (.not. in_LHe_peak) then
                ! check for peak
-               if (s% power_he_burn .gt. 1e4) then
+               if (LHe_shell .gt. 1e4) then
                   in_LHe_peak = .true.
                   TP_count = TP_count + 1
                   write(*,*) 'starting thermal pulse', TP_count
@@ -471,7 +500,7 @@
                   age_at_TP = s% star_age
                end if
             else
-               if (s% power_h_burn/s% power_he_burn .gt. 10) in_LHe_peak = .false. ! pulse over
+               if (LH_shell/LHe_shell .gt. 10) in_LHe_peak = .false. ! pulse over
             end if
 
             ! dynamic axes for Kipp plot
