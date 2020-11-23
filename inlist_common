@@ -48,32 +48,8 @@
 
      use_Ledoux_criterion = .false.
 
-     ! little bit of overshoot, except for c-flame
-     overshoot_scheme(1) = 'exponential'
-     overshoot_zone_type(1) = 'nonburn'
-     overshoot_zone_loc(1) = 'any'
-     overshoot_bdy_loc(1) = 'any'
-     overshoot_f(1) = 0.014
-     overshoot_f0(1) = 0.004
-
-     overshoot_scheme(2) = 'exponential'
-     overshoot_zone_type(2) = 'burn_H'
-     overshoot_zone_loc(2) = 'any'
-     overshoot_bdy_loc(2) = 'any'
-     overshoot_f(2) = 0.014
-     overshoot_f0(2) = 0.004
-
-     overshoot_scheme(3) = 'exponential'
-     overshoot_zone_type(3) = 'burn_He'
-     overshoot_zone_loc(3) = 'any'
-     overshoot_bdy_loc(3) = 'any'
-     overshoot_f(3) = 0.014
-     overshoot_f0(3) = 0.004
-
      ! let overshoot go to center
      min_overshoot_q = 0
-
-
 
 ! options for energy conservation (see MESA V, Section 3)
 !      use_dedt_form_of_energy_eqn = .true.
