@@ -7,4 +7,12 @@
 
 &controls
 
+      ! need Ledoux
+      ! - for boundary at base of outer conv shell
+      ! - for thermohaline in core
+      use_Ledoux_criterion = .true.
+      num_cells_for_smooth_gradL_composition_term = 0
+      thermohaline_option = 'Kippenhahn'
+      thermohaline_coeff = 1
+
 /
