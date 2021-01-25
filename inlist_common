@@ -48,7 +48,6 @@
 
      use_Ledoux_criterion = .false.
      calculate_brunt_N2 = .true.
-     calculate_brunt_B = .true.
 
      ! let overshoot go to center
      min_overshoot_q = 0
