@@ -38,7 +38,7 @@
 &controls
 
 ! starting specifications
-      initial_mass = 10.0
+      initial_mass = 8.0
       initial_y = 0.26
       initial_z = 0.01
 
@@ -47,6 +47,8 @@
      MLT_option = 'Henyey'
 
      use_Ledoux_criterion = .false.
+     calculate_brunt_N2 = .true.
+     calculate_brunt_B = .true.
 
      ! let overshoot go to center
      min_overshoot_q = 0

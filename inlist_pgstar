@@ -5,7 +5,7 @@
   pgstar_interval = 50
   file_digits = 8
 
-  Grid1_title = 'SAGB ECSN (10.0M)'
+  Grid1_title = 'SAGB ECSN (8.0M)'
 
   Grid1_win_flag = .false.
 

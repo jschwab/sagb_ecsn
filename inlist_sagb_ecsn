@@ -2,11 +2,11 @@
 
 ! begin with saved model from after 1st thermal pulse
       load_saved_model = .true.
-      saved_model_name = '10.0M_1TP.mod'
+      saved_model_name = '8.0M_1TP.mod'
 
 ! save a model and profile at the end of the run
       save_model_when_terminate = .true.
-      save_model_filename = 'final.mod'
+      save_model_filename = '8.0M_final.mod'
       !required_termination_code_string = 'one thermal pulse cycle complete'
 
       write_profile_when_terminate = .true.
@@ -29,6 +29,9 @@
 &controls
 
 ! see inlist_degenerate_core
+  ! use_Ledoux_criterion = .true.
+  ! num_cells_for_smooth_gradL_composition_term = 0
+  ! thermohaline_coeff = 1
 
 ! reduce amount of output
   photo_interval = 1000
