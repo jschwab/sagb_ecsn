@@ -101,6 +101,8 @@
       delta_XHe_cntr_limit = 0.005d0
       delta_XHe_cntr_hard_limit = 0.01d0
 
+      delta_lg_star_mass_limit = 5e-4
+      delta_lg_star_mass_hard_limit = 1e-3
 
 ! turn off more energy nonsense for now
       limit_for_rel_error_in_energy_conservation = 1d99

@@ -3,6 +3,10 @@
 ! sd-shell weak rates
       use_suzuki_weak_rates = .true.
 
+! velocities
+      change_v_flag = .true.
+      new_v_flag = .true.
+
 /
 
 &controls
